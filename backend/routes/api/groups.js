@@ -859,7 +859,7 @@ list.forEach(item=>{
   if(!group.previewImage){
     group.previewImage = 'no photo added'
   }
-  delete group.groupImages
+  delete groups.groupImages
 })
 
     // for (let i = 0; i < groups.length; i++) {
