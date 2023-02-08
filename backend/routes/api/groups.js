@@ -874,7 +874,7 @@ list.forEach(item=>{
     //   }
     //   list.push(obj)
     // }
-    resObj.Groups = list
+    // resObj.Groups = list
 
     res.json({
       Groups: groups
