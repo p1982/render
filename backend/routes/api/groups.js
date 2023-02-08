@@ -833,15 +833,7 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-     {
-      model: User,
-    //         attributes:  [ 'id', 'firstName' ],
-    //         through: {
-    //           model:Membership,
-    //             attributes: ["status"]
-    //         },
-    //         required: true,
-     }
+
       ]
     })
     
@@ -853,11 +845,11 @@ groups.forEach(group=>{
 list.forEach(item=>{
   item.groupImages.forEach(image=>{
     if(image.preview){
-      group.previewImage=image.url
+      groups.previewImage=image.url
     }
   })
-  if(!group.previewImage){
-    group.previewImage = 'no photo added'
+  if(!groups.previewImage){
+    groups.previewImage = 'no photo added'
   }
   delete groups.groupImages
 })
