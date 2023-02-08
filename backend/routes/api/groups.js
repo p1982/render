@@ -845,34 +845,48 @@ router.get("/", async (req, res, next) => {
       ]
     })
     
-    const resObj = {
-
-    }
     const list = []
-    for (let i = 0; i < groups.length; i++) {
+groups.forEach(group=>{
+  list.push(group.toJSON())
+})
+
+list.forEach(item=>{
+  item.groupImages.forEach(image=>{
+    if(image.preview){
+      group.previewImage=image.url
+    }
+  })
+  if(!group.previewImage){
+    group.previewImage = 'no photo added'
+  }
+  delete group.groupImages
+})
+
+    // for (let i = 0; i < groups.length; i++) {
      
  
-      const obj = {
-        id: groups[i].id,
-        groupId: groups[i].id,
-        name: groups[i].name,
-        organizerId: groups[i].organizerId,
-        about: groups[i].about,
-        type: groups[i].type,
-        private: groups[i].private,
-        city: groups[i].city,
-        state: groups[i].state,
-        createdAt: groups[i].createdAt,
-        updatedAt: groups[i].updatedAt,
-        previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
-        // numMembers: groups[i].Users.length
-      }
-      list.push(obj)
-    }
+    //   const obj = {
+    //     id: groups[i].id,
+    //     groupId: groups[i].id,
+    //     name: groups[i].name,
+    //     organizerId: groups[i].organizerId,
+    //     about: groups[i].about,
+    //     type: groups[i].type,
+    //     private: groups[i].private,
+    //     city: groups[i].city,
+    //     state: groups[i].state,
+    //     createdAt: groups[i].createdAt,
+    //     updatedAt: groups[i].updatedAt,
+    //     previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
+    //     // numMembers: groups[i].Users.length
+    //   }
+    //   list.push(obj)
+    // }
     resObj.Groups = list
 
-    res.json(
-      resObj
+    res.json({
+      Groups: groups
+    }
     )
     return;
   } catch (err) {
