@@ -364,7 +364,7 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
     // res.json(resObg)
     // const status = member.dataValues.status
 
-    //if (status === "organaizer" || status === "co-host") {
+    //if (status === "organzer" || status === "co-host") {
     const membership = await Membership.update({
       userId: req.body.memberId,
       groupId: +req.params.id,
@@ -420,7 +420,7 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
         status: 404
       })
     }
-    if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organaizer" || membership.dataValues.userId === userId) {
+    if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organzer" || membership.dataValues.userId === userId) {
       await Membership.destroy({
         where: {
           groupId: +req.params.id
@@ -726,7 +726,7 @@ router.get("/:id", async (req, res, next) => {
     })
 
 
-    const organaizer = await User.findByPk(group.organizerId, {
+    const organzer = await User.findByPk(group.organizerId, {
       attributes: ["id", "lastName", "firstName"]
     })
 
@@ -749,7 +749,7 @@ router.get("/:id", async (req, res, next) => {
       "updatedAt": group.updatedAt,
       "numMembers": membership.length,
       "GroupImages": group.GroupImages,
-      "Organizer": organaizer,
+      "Organizer": organzer,
       "Venues": location,
     }
     res.json(
@@ -810,7 +810,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
     })
 
     await Membership.create({
-      status: "organaizer",
+      status: "organizer",
       userId: +req.user.id,
       groupId: +group.id
     })
@@ -833,51 +833,50 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-
+        {
+          model: User,
+                attributes:  [ 'id', 'firstName' ],
+                through: {
+                  model:Membership,
+                    attributes: ["status"]
+                },
+                required: true
+         }
       ]
     })
-    
+    console.log(groups)
     const list = []
 groups.forEach(group=>{
   list.push(group.toJSON())
 })
 
 list.forEach(item=>{
-  item.groupImages.forEach(image=>{
-    if(image.preview){
-      groups.previewImage=image.url
+  item.GroupImages.forEach(image=>{
+    if(image.preview===true){
+     
+      item.previewImage=image.url
     }
   })
-  if(!groups.previewImage){
-    groups.previewImage = 'no photo added'
+  if(!item.previewImage){
+    item.previewImage = 'no photo added'
   }
-  delete groups.groupImages
+  let counter=0;
+
+  item.Users.forEach(user=>{
+    if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+      console.log(user.Membership.status)
+      counter++
+    }
+  })
+  item.numMembers=counter
+  delete item.GroupImages
+  delete item.Users
 })
 
-    // for (let i = 0; i < groups.length; i++) {
-     
- 
-    //   const obj = {
-    //     id: groups[i].id,
-    //     groupId: groups[i].id,
-    //     name: groups[i].name,
-    //     organizerId: groups[i].organizerId,
-    //     about: groups[i].about,
-    //     type: groups[i].type,
-    //     private: groups[i].private,
-    //     city: groups[i].city,
-    //     state: groups[i].state,
-    //     createdAt: groups[i].createdAt,
-    //     updatedAt: groups[i].updatedAt,
-    //     previewImage:groups[i].GroupImages.length > 0 && groups[i].GroupImages[0].url,
-    //     // numMembers: groups[i].Users.length
-    //   }
-    //   list.push(obj)
-    // }
-    // resObj.Groups = list
+   
 
     res.json({
-      Groups: groups
+      Groups: list
     }
     )
     return;

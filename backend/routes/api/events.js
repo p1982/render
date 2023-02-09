@@ -158,7 +158,7 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
       }
     })
     // const status = membership.dataValues.status
-    // if (status === "organaizer" || status === "co-host") {
+    // if (status === "organizer" || status === "co-host") {
       const attendees = await Attendees.update({
         userId: req.body.userId,
         eventId: +req.params.id,
@@ -232,7 +232,7 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
       }
       const status = membership.dataValues.status
 
-      if (status !== "organaizer" && status !== "co-host") {     
+      if (status !== "organizer" && status !== "co-host") {     
         next({
           "message": "Only the User or organizer may delete an Attendance",
           "statusCode": 403
@@ -311,7 +311,7 @@ router.get("/:id/attendees", async (req, res, next) => {
      
       if (membership.status !== "pending" ||
         (currentUserMembership &&
-          (currentUserMembership.status == "co-host" || currentUserMembership.status == "organaizer"))) {
+          (currentUserMembership.status == "co-host" || currentUserMembership.status == "organizer"))) {
         let user = await User.findByPk(attendees[i].userId)
         userList.push({
           id: user.id,
@@ -403,7 +403,7 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
       }
     })
     const status = membership.dataValues.status
-    if (status === "organaizer" || status === "co-host") {
+    if (status === "organizer" || status === "co-host") {
       if (req.body.status === "pending") {
         next({
           "message": "Cannot change an attendance status to pending",
@@ -477,7 +477,7 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
   
 
   
-  // if(!membership || membership.status!=="co-host" && membership.status!=="organaizer" ){
+  // if(!membership || membership.status!=="co-host" && membership.status!=="organizer" ){
   //   next({
   //     "message": "Only the co-host or organizer may delete an event",
   //     "statusCode": 403

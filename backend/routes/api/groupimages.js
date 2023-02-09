@@ -36,7 +36,7 @@ const membership = await Membership.findOne({
 //     })
 // }
 console.log(membership.dataValues.status)
-if(membership.dataValues.status==="co-host" ||membership.dataValues.status==="organaizer" ){
+if(membership.dataValues.status==="co-host" ||membership.dataValues.status==="organizer" ){
     res.json(  {
         "message": "Successfully deleted",
         "statusCode": 200

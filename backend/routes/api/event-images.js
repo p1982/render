@@ -45,7 +45,7 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         //         "statusCode": 403
         //     })
         // }
-        // if (membership.status !== "co-host" && membership.status !== "organaizer") {
+        // if (membership.status !== "co-host" && membership.status !== "organizer") {
 
         //     next({
         //         "message": "not enough rights",
