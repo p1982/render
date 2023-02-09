@@ -860,19 +860,21 @@ list.forEach(item=>{
   if(!item.previewImage){
     item.previewImage = 'no photo added'
   }
-  let counter=0;
+  // let counter=0;
 
-  item.Users.forEach(user=>{
-    if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
-      console.log(user.Membership.status)
-      counter++
-    }
-  })
-  item.numMembers=counter
+  // item.Users.forEach(user=>{
+  //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+  //     console.log(user.Membership.status)
+  //     counter++
+  //   }
+  // })
+  // item.numMembers=counter
   delete item.GroupImages
-  delete item.Users
+  // delete item.Users
 })
-
+// list.forEach(item=>{
+//   const user=
+// })
    
 
     res.json({
