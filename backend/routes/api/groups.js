@@ -833,15 +833,15 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-        {
-          model: User,
-                attributes:  [ 'firstName' ],
-                through: {
-                  model:Membership,
-                    attributes: ["status"]
-                },
-                required: true
-         }
+        // {
+        //   model: User,
+        //         attributes:  [ 'firstName' ],
+        //         through: {
+        //           model:Membership,
+        //             attributes: ["status"]
+        //         },
+        //         required: true
+        //  }
       ]
     })
     console.log(groups)
