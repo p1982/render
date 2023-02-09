@@ -838,7 +838,7 @@ router.get("/", async (req, res, next) => {
           model: User,
           attributes: ['firstName'],
           through: {
-            model: Membership,
+            model: "Memberships",
             attributes: ["status"]
           },
           required: true
