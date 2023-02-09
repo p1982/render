@@ -482,8 +482,8 @@ router.get("/:id/events", async (req, res, next) => {
           ]
         }
       ]
-        });
-      
+    });
+
     const list = []
     const resObg = {}
     for (let i = 0; i < events.length; i++) {
@@ -826,7 +826,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 //Get all Groups - task 4
 router.get("/", async (req, res, next) => {
   try {
-  
+
     const groups = await Group.findAll({
       include: [
         {
@@ -834,50 +834,55 @@ router.get("/", async (req, res, next) => {
           attributes: ['preview', "url"]
         },
 
-        {
-          model: User,
-                attributes:  [ 'firstName' ],
-                through: {
-                  model:Membership,
-                    attributes: ["status"]
-                },
-                required: true
-         }
+        // {
+        //   model: User,
+        //   attributes: ['firstName'],
+        //   through: {
+        //     model: Membership,
+        //     attributes: ["status"]
+        //   },
+        //   required: true
+        // }
       ],
-      
+
     })
     console.log(groups)
     const list = []
-groups.forEach(group=>{
-  list.push(group.toJSON())
-})
+    groups.forEach(group => {
+      list.push(group.toJSON())
+    })
 
-list.forEach(item=>{
-  item.GroupImages.forEach(image=>{
-    if(image.preview===true){
-     
-      item.previewImage=image.url
-    }
-  })
-  if(!item.previewImage){
-    item.previewImage = 'no photo added'
-  }
-  // let counter=0;
+    list.forEach(item => {
+      item.GroupImages.forEach(image => {
+        if (image.preview === true) {
 
-  // item.Users.forEach(user=>{
-  //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
-  //     console.log(user.Membership.status)
-  //     counter++
-  //   }
-  // })
-  // item.numMembers=counter
-  delete item.GroupImages
-  // delete item.Users
-})
-// list.forEach(item=>{
-//   const user=
-// })
-   
+          item.previewImage = image.url
+        }
+      })
+      if (!item.previewImage) {
+        item.previewImage = 'no photo added'
+      }
+      // let counter=0;
+
+      // item.Users.forEach(user=>{
+      //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+      //     console.log(user.Membership.status)
+      //     counter++
+      //   }
+      // })
+      // item.numMembers=counter
+      const user = User.findByPk(item.organizerId, {
+        through: {
+              model: Membership,
+              attributes: ["status"]
+            },
+      })
+      item.User=user
+      delete item.GroupImages
+
+    })
+
+
 
     res.json({
       Groups: list
