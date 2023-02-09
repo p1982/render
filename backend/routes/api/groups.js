@@ -834,15 +834,15 @@ router.get("/", async (req, res, next) => {
           attributes: ['preview', "url"]
         },
 
-        // {
-        //   model: User,
-        //   attributes: ['firstName'],
-        //   through: {
-        //     model: Membership,
-        //     attributes: ["status"]
-        //   },
-        //   required: true
-        // }
+        {
+          model: User,
+          attributes: ['firstName'],
+          through: {
+            model: Membership,
+            attributes: ["status"]
+          },
+          required: true
+        }
       ],
 
     })
@@ -862,22 +862,22 @@ router.get("/", async (req, res, next) => {
       if (!item.previewImage) {
         item.previewImage = 'no photo added'
       }
-      // let counter=0;
+      let counter=0;
 
-      // item.Users.forEach(user=>{
-      //   if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
-      //     console.log(user.Membership.status)
-      //     counter++
-      //   }
-      // })
-      // item.numMembers=counter
-      const user = User.findByPk(item.organizerId, {
-        through: {
-              model: Membership,
-              attributes: ["status"]
-            },
+      item.Users.forEach(user=>{
+        if(user.Membership.status==="organizer"  || user.Membership.status==="co-host" || user.Membership.status==="member"){
+          console.log(user.Membership.status)
+          counter++
+        }
       })
-      item.User=user
+      item.numMembers=counter
+      // const user = User.findByPk(item.organizerId, {
+      //   through: {
+      //         model: Membership,
+      //         attributes: ["status"]
+      //       },
+      // })
+      // item.User=user
       delete item.GroupImages
 
     })
