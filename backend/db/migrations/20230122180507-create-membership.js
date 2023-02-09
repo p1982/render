@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
             model:"Groups"
           }
         },
-      UserId: {
+      user_id: {
         type: Sequelize.INTEGER,
         onDelete:"Cascade",
         references:{
