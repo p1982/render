@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { json } = require('sequelize');
 
 const { restoreUser, requireAuth } = require('../../utils/auth');
-const { User, Group, Membership, GroupImages, Event, Attendees, Location, EventImages } = require('../../db/models');
+const { User, Group, Membership, GroupImages, Event, Attendees, Location, EventImages, sequelize } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 router.use(restoreUser)
@@ -833,16 +833,18 @@ router.get("/", async (req, res, next) => {
           model: GroupImages,
           attributes: ['preview', "url"]
         },
-        // {
-        //   model: User,
-        //         attributes:  [ 'firstName' ],
-        //         through: {
-        //           model:Membership,
-        //             attributes: ["status"]
-        //         },
-        //         required: true
-        //  }
-      ]
+
+        {
+          model: User,
+                attributes:  [ 'firstName' ],
+                through: {
+                  model:Membership,
+                    attributes: ["status"]
+                },
+                required: true
+         }
+      ],
+      
     })
     console.log(groups)
     const list = []

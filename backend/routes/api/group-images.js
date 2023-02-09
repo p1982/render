@@ -26,7 +26,7 @@ const router = express.Router();
 //         // const membership = await Membership.findOne({
 //         //     where: {
 //         //         groupId: image.groupId,
-//         //         userId: +req.user.id
+//         //         UserId: +req.user.id
 //         //     }
 //         // })
 //         // if (!membership) {
