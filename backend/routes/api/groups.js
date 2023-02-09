@@ -280,10 +280,10 @@ const validateEvents = [
 //       })
 //     }
 
-//     const userId = +req.user.id
+//     const UserId = +req.user.id
 //     const membership = await Membership.findOne({
 //       where: {
-//         userId: userId,
+//         UserId: UserId,
 //         groupId: group.id
 //       }
 //     })
@@ -304,12 +304,12 @@ const validateEvents = [
 
 
 //     const member = await Membership.create({
-//       userId: +req.user.id,
+//       UserId: +req.user.id,
 //       groupId: +req.params.id,
 //       status: "pending"
 //     })
 //     const resObj = {
-//       memberId: member.userId,
+//       memberId: member.UserId,
 //       status: member.status,
 //       groupId: member.groupId
 //     }
@@ -339,7 +339,7 @@ const validateEvents = [
 //     const member = await Membership.findOne({
 //       where: {
 //         // groupId: group.id,
-//         userId: +req.user.id
+//         UserId: +req.user.id
 //       }
 //     })
 //     // console.log(member)
@@ -357,7 +357,7 @@ const validateEvents = [
 //     // const resObg = {
 //     //   "id": member.id,
 //     //   "groupId": member.groupId,
-//     //   "memberId": member.userId,
+//     //   "memberId": member.UserId,
 //     //   "status": member.status
 //     // }
 //     console.log(member)
@@ -366,7 +366,7 @@ const validateEvents = [
 
 //     //if (status === "organzer" || status === "co-host") {
 //     const membership = await Membership.update({
-//       userId: req.body.memberId,
+//       UserId: req.body.memberId,
 //       groupId: +req.params.id,
 //       status: req.body.status
 //     }, {
@@ -376,7 +376,7 @@ const validateEvents = [
 //     })
 
 //     const resObg = {
-//       userId: req.body.memberId,
+//       UserId: req.body.memberId,
 //       eventId: +req.params.id,
 //       id: membership.id,
 
@@ -407,10 +407,10 @@ const validateEvents = [
 //         statusCode: 404
 //       })
 //     }
-//     const userId = req.user.id
+//     const UserId = req.user.id
 //     const membership = await Membership.findOne({
 //       where: {
-//         userId: userId,
+//         UserId: UserId,
 //         groupId: group.dataValues.id
 //       }
 //     })
@@ -420,7 +420,7 @@ const validateEvents = [
 //         status: 404
 //       })
 //     }
-//     if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organzer" || membership.dataValues.userId === userId) {
+//     if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organzer" || membership.dataValues.UserId === UserId) {
 //       await Membership.destroy({
 //         where: {
 //           groupId: +req.params.id
@@ -770,8 +770,8 @@ const validateEvents = [
 //         statusCode: 404
 //       })
 //     }
-//     const userId = req.user.id
-//     // if (group.organizerId === userId) {
+//     const UserId = req.user.id
+//     // if (group.organizerId === UserId) {
 //     //   await group.destroy()
 //     //   res.json({
 //     //     "message": "Successfully deleted",
@@ -811,7 +811,7 @@ const validateEvents = [
 
 //     await Membership.create({
 //       status: "organizer",
-//       userId: +req.user.id,
+//       UserId: +req.user.id,
 //       groupId: +group.id
 //     })
 
@@ -838,10 +838,10 @@ router.get("/", async (req, res, next) => {
           model: User,
                 attributes:  [ 'firstName' ],
                 through: {
-                  model:Membership,
+               
                     attributes: ["status"]
                 },
-                required: true
+                
          }
       ],
       
