@@ -101,12 +101,12 @@ router.post("/:id/attendance", requireAuth, async (req, res, next) => {
       })
     }
     const attendees = await Attendees.create({
-      userId: +req.user.id,
+      UserId: +req.user.id,
       eventId: +req.params.id,
       status:"pending"
     })
     const resObj = {
-      userId: +req.user.id,
+      UserId: +req.user.id,
       eventId: +req.params.id,
       status:"pending"
     }
@@ -154,13 +154,13 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
     const user = req.user.id
     const membership = await Membership.findOne({
       where: {
-        userId: user
+        UserId: user
       }
     })
     // const status = membership.dataValues.status
     // if (status === "organizer" || status === "co-host") {
       const attendees = await Attendees.update({
-        userId: req.body.userId,
+        UserId: req.body.UserId,
         eventId: +req.params.id,
         status: req.body.status
       }, {
@@ -170,7 +170,7 @@ router.put("/:id/attendance", requireAuth, async (req, res, next) => {
       })
 
       const resObg = {
-        userId: +user,
+        UserId: +user,
         eventId: +req.params.id,
         id: attendees.id,
         status: req.body.status
@@ -204,8 +204,8 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
         statusCode: 404
       })
     }
-    const userId = req.user.id
-    if (!userId) {
+    const UserId = req.user.id
+    if (!UserId) {
       next({
         message: "You ara not autorized",
         status: 403
@@ -217,10 +217,10 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
         status: 404
       })
     }
-    if (req.body.memberId !== userId) {
+    if (req.body.memberId !== UserId) {
       const membership = await Membership.findOne({
         where: {
-          userId,
+          UserId,
           groupId: event.id
         }
       })
@@ -241,7 +241,7 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
     }
     const attendees = await Attendees.findOne({
       where: {
-        userId: +req.body.memberId,
+        UserId: +req.body.memberId,
         eventId: +req.params.id,
       }
     })
@@ -255,7 +255,7 @@ router.delete("/:id/attendance", [restoreUser, requireAuth], async (req, res, ne
 
     await Attendees.destroy({
       where: {
-        userId: +req.body.memberId,
+        UserId: +req.body.memberId,
         eventId: +req.params.id,
       }
     });
@@ -289,7 +289,7 @@ router.get("/:id/attendees", async (req, res, next) => {
     if (req.user) {
       currentUserMembership = Membership.findAll({
         where: {
-          userId: req.user.id,
+          UserId: req.user.id,
           groupId: groupId
         }
       });
@@ -304,7 +304,7 @@ router.get("/:id/attendees", async (req, res, next) => {
     for (let i = 0; i < attendees.length; i++) {
       let membership = await Membership.findOne({
         where: {
-          userId: attendees[i].userId,
+          UserId: attendees[i].UserId,
           groupId: groupId
         }
       });
@@ -312,7 +312,7 @@ router.get("/:id/attendees", async (req, res, next) => {
       if (membership.status !== "pending" ||
         (currentUserMembership &&
           (currentUserMembership.status == "co-host" || currentUserMembership.status == "organizer"))) {
-        let user = await User.findByPk(attendees[i].userId)
+        let user = await User.findByPk(attendees[i].UserId)
         userList.push({
           id: user.id,
           "firstName": user.firstName,
@@ -396,10 +396,10 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
         statusCode: 404
       })
     }
-    const userId = req.user.id
+    const UserId = req.user.id
     const membership = await Membership.findOne({
       where: {
-        userId
+        UserId
       }
     })
     const status = membership.dataValues.status
@@ -412,7 +412,7 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
       }
       const attendees = await Attendees.findOne({
         where: {
-          userId: +req.body.id,
+          UserId: +req.body.id,
           eventId: +req.params.id,
         }
       })
@@ -423,7 +423,7 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
         })
       }
       await attendees.update({
-        userId: +req.body.id,
+        UserId: +req.body.id,
         eventId: +req.params.id,
         status: req.body.status
       }, {
@@ -432,7 +432,7 @@ router.put("/:id/attendance", [requireAuth, validateEvents], async (req, res, ne
         }
       })
       // const resObg = {
-      //   userId: +userId,
+      //   UserId: +UserId,
       //   eventId: +req.params.id,
       //   id: attendees.dataValues.id,
       //   status: req.body.status

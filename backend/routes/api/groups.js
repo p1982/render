@@ -280,10 +280,10 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
       })
     }
 
-    const userId = +req.user.id
+    const UserId = +req.user.id
     const membership = await Membership.findOne({
       where: {
-        userId: userId,
+        UserId: UserId,
         groupId: group.id
       }
     })
@@ -304,12 +304,12 @@ router.post("/:id/membership", requireAuth, async (req, res, next) => {
 
 
     const member = await Membership.create({
-      userId: +req.user.id,
+      UserId: +req.user.id,
       groupId: +req.params.id,
       status: "pending"
     })
     const resObj = {
-      memberId: member.userId,
+      memberId: member.UserId,
       status: member.status,
       groupId: member.groupId
     }
@@ -339,7 +339,7 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
     const member = await Membership.findOne({
       where: {
         // groupId: group.id,
-        userId: +req.user.id
+        UserId: +req.user.id
       }
     })
     // console.log(member)
@@ -357,7 +357,7 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
     // const resObg = {
     //   "id": member.id,
     //   "groupId": member.groupId,
-    //   "memberId": member.userId,
+    //   "memberId": member.UserId,
     //   "status": member.status
     // }
     console.log(member)
@@ -366,7 +366,7 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
 
     //if (status === "organzer" || status === "co-host") {
     const membership = await Membership.update({
-      userId: req.body.memberId,
+      UserId: req.body.memberId,
       groupId: +req.params.id,
       status: req.body.status
     }, {
@@ -376,7 +376,7 @@ router.put("/:id/membership", requireAuth, async (req, res, next) => {
     })
 
     const resObg = {
-      userId: req.body.memberId,
+      UserId: req.body.memberId,
       eventId: +req.params.id,
       id: membership.id,
 
@@ -407,10 +407,10 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
         statusCode: 404
       })
     }
-    const userId = req.user.id
+    const UserId = req.user.id
     const membership = await Membership.findOne({
       where: {
-        userId: userId,
+        UserId: UserId,
         groupId: group.dataValues.id
       }
     })
@@ -420,7 +420,7 @@ router.delete("/:id/membership", requireAuth, async (req, res, next) => {
         status: 404
       })
     }
-    if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organzer" || membership.dataValues.userId === userId) {
+    if (membership.dataValues.status === "co-host" || membership.dataValues.status === "organzer" || membership.dataValues.UserId === UserId) {
       await Membership.destroy({
         where: {
           groupId: +req.params.id
@@ -770,8 +770,8 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
         statusCode: 404
       })
     }
-    const userId = req.user.id
-    // if (group.organizerId === userId) {
+    const UserId = req.user.id
+    // if (group.organizerId === UserId) {
     //   await group.destroy()
     //   res.json({
     //     "message": "Successfully deleted",
@@ -811,7 +811,7 @@ router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
 
     await Membership.create({
       status: "organizer",
-      userId: +req.user.id,
+      UserId: +req.user.id,
       groupId: +group.id
     })
 
