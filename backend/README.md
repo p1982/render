@@ -1736,7 +1736,7 @@ Request attendance for an event specified by id.
     ```json
     {
       "eventId": 1,
-      "user_id": 2,
+      "UserId": 2,
       "status": "pending"
     }
     ```
@@ -1797,7 +1797,7 @@ Change the status of an attendance for an event specified by id.
 
     ```json
     {
-      "user_id": 2,
+      "UserId": 2,
       "status": "member"
     }
     ```
@@ -1812,7 +1812,7 @@ Change the status of an attendance for an event specified by id.
     {
       "id": 1,
       "eventId": 1,
-      "user_id": 2,
+      "UserId": 2,
       "status": "member"
     }
     ```
@@ -1872,7 +1872,7 @@ Delete an attendance to an event specified by id.
 
     ```json
     {
-      "user_id": 1
+      "UserId": 1
     }
     ```
 

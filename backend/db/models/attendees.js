@@ -14,14 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Attendees.init({
-    eventId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    } ,
-    user_id:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    } ,
+
     status:{
       type:DataTypes.STRING,
       validate:{
