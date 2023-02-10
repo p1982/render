@@ -796,31 +796,31 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
 // Create a Group  - task 7
 
 router.post("/", [requireAuth, validateGroups], async (req, res, next) => {
-  try {
-    const { name, about, type, private, city, state } = req.body
-    const user = req.user
-    const group = await Group.create({
-      name,
-      about,
-      type,
-      private,
-      city,
-      state,
-      organizerId: +user.id
-    })
+  // try {
+  //   const { name, about, type, private, city, state } = req.body
+  //   const user = req.user
+  //   const group = await Group.create({
+  //     name,
+  //     about,
+  //     type,
+  //     private,
+  //     city,
+  //     state,
+  //     organizerId: +user.id
+  //   })
 
-    await Membership.create({
-      status: "organizer",
-      userId: +req.user.id,
-      groupId: +group.id
-    })
+  //   await Membership.create({
+  //     status: "organizer",
+  //     userId: +req.user.id,
+  //     groupId: +group.id
+  //   })
 
-    res.status(201).json(
-      group
-    )
-  } catch (err) {
-    next(err)
-  }
+  //   res.status(201).json(
+  //     group
+  //   )
+  // } catch (err) {
+  //   next(err)
+  // }
 })
 
 //Get all Groups - task 4
@@ -871,13 +871,13 @@ router.get("/", async (req, res, next) => {
         }
       })
       item.numMembers=counter
-      // const user = User.findByPk(item.organizerId, {
-      //   through: {
-      //         model: Membership,
-      //         attributes: ["status"]
-      //       },
-      // })
-      // item.User=user
+      const user = User.findByPk(item.organizerId, {
+        through: {
+              model: Membership,
+              attributes: ["status"]
+            },
+      })
+      item.User=user
       delete item.GroupImages
 
     })

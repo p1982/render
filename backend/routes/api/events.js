@@ -92,30 +92,30 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
 //Request Attendance to an Event
 router.post("/:id/attendance", requireAuth, async (req, res, next) => {
   
-  try {
-    const event = await Event.findByPk(req.params.id)
-    if (!event) {
-      next({
-        message: "Event could not be found",
-        statusCode: 404
-      })
-    }
-    const attendees = await Attendees.create({
-      userId: +req.user.id,
-      eventId: +req.params.id,
-      status:"pending"
-    })
-    const resObj = {
-      userId: +req.user.id,
-      eventId: +req.params.id,
-      status:"pending"
-    }
-    res.status(201).json(
-      resObj
-    )
-  } catch (err) {
-    next(err)
-  }
+  // try {
+  //   const event = await Event.findByPk(req.params.id)
+  //   if (!event) {
+  //     next({
+  //       message: "Event could not be found",
+  //       statusCode: 404
+  //     })
+  //   }
+  //   const attendees = await Attendees.create({
+  //     userId: +req.user.id,
+  //     eventId: +req.params.id,
+  //     status:"pending"
+  //   })
+  //   const resObj = {
+  //     userId: +req.user.id,
+  //     eventId: +req.params.id,
+  //     status:"pending"
+  //   }
+  //   res.status(201).json(
+  //     resObj
+  //   )
+  // } catch (err) {
+  //   next(err)
+  // }
 })
 
 
