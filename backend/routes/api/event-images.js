@@ -36,7 +36,7 @@ router.delete("/:id",  requireAuth, async (req, res, next) => {
         // const membership = await Membership.findOne({
         //     where: {
         //         groupId: event.groupId,
-        //         UserId: +req.user.id
+        //         userId: +req.user.id
         //     }
         // })
         // if (!membership) {

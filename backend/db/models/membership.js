@@ -16,7 +16,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Membership.init({
- 
+    groupId:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    } ,
+   
+    UserId:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    } ,
     status:{
       type:DataTypes.STRING,
       validate:{

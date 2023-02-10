@@ -26,7 +26,7 @@ router.delete("/:id", [restoreUser, requireAuth], async (req, res, next) => {
         // const membership = await Membership.findOne({
         //     where: {
         //         groupId: image.groupId,
-        //         UserId: +req.user.id
+        //         userId: +req.user.id
         //     }
         // })
         // if (!membership) {

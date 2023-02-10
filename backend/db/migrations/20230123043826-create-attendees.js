@@ -12,15 +12,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      eventId: {
-        type: Sequelize.INTEGER,
-        allowNull:false,
+      // eventId: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull:false,
     
-        },
-      UserId: {
-        type: Sequelize.INTEGER,
+      //   },
+      // userId: {
+      //   type: Sequelize.INTEGER,
       
-      },
+      // },
       status:{
         type: Sequelize.STRING
       },
