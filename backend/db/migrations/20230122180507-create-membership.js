@@ -16,21 +16,21 @@ if (process.env.NODE_ENV === 'production') {
         type: Sequelize.INTEGER
       },
      
-      // groupId: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull:false,
-      //   onDelete:"Cascade",
-      //   references:{
-      //       model:"Groups"
-      //     }
-      //   },
-      // userId: {
-      //   type: Sequelize.INTEGER,
-      //   onDelete:"Cascade",
-      //   references:{
-      //       model:"Users"
-      //     }
-      // },
+      groupId: {
+        type: Sequelize.INTEGER,
+        allowNull:false,
+        onDelete:"Cascade",
+        references:{
+            model:"Groups"
+          }
+        },
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete:"Cascade",
+        references:{
+            model:"Users"
+          }
+      },
       status: {
         type: Sequelize.STRING
       },
