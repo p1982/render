@@ -4,9 +4,9 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 module.exports = {
-  up:async(queryInterface, Sequelize)=> {
-    return queryInterface.createTable('EventImages', {
-       id: {
+  up:async(queryInterface, Sequelize) =>{
+    return queryInterface.createTable('Attendees', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -15,15 +15,13 @@ module.exports = {
       eventId: {
         type: Sequelize.INTEGER,
         allowNull:false,
-        references:{
-          model:"Events",
-          onDelete:'CASCADE'
-        }
+    
+        },
+      userId: {
+        type: Sequelize.INTEGER,
+      
       },
-      preview: {
-        type: Sequelize.STRING
-      },
-      url: {
+      status:{
         type: Sequelize.STRING
       },
       createdAt: {
@@ -38,7 +36,7 @@ module.exports = {
       }
     },options);
   },
-  down: async (queryInterface, Sequelize)=> {
-    return  queryInterface.dropTable('EventImages', options);
+  down:async (queryInterface, Sequelize)=>{
+    await queryInterface.dropTable('Attendees', options);
   }
 };

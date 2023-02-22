@@ -11,70 +11,78 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      Event.belongsToMany(models.User,{
-        through:models.Attendees
+      // Event.belongsToMany(models.User,{
+      //   through:models.Attendees
+      // })
+
+      // define association here
+      Event.belongsToMany(models.User, {
+        through: models.Attendees
       })
 
       // define association here
       Event.hasMany(models.EventImages, {
-        foreignKey:'eventId',
-        onDelete:'Cascade',
-        hooks:true
+        foreignKey: 'eventId',
+        onDelete: 'Cascade',
+        hooks: true
       })
 
 
-      Event.belongsTo(models.Location,{
-        foreignKey:'locationId'
+      Event.belongsTo(models.Location, {
+        foreignKey: 'locationId'
       })
-      
-        // Your code here
-        Event.belongsTo(models.Group,{
-          foreignKey:'groupId'
-        })
-      }
-    
+
+      // Your code here
+      Event.belongsTo(models.Group, {
+        foreignKey: 'groupId'
+      })
+    }
+
   }
   Event.init({
-    groupId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    description:{
-      type:DataTypes.STRING,
-      allowNull:false
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    capacity:{
-      type:DataTypes.INTEGER,
-      allowNull:false
+    capacity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
 
-    name:{
-      type:DataTypes.STRING,
-      allowNull:false
-    } ,
-    dateOfStart:{
-      type:DataTypes.DATE,
-      allowNull:false
-    } ,
-    dateOfEnd:{
-      type:DataTypes.DATE,
-      allowNull:false
-    } ,
-    locationId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    } ,
-  
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    dateOfStart: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    dateOfEnd: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    locationId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     price: {
-type:DataTypes.DOUBLE,
-allowNull:false
-    } ,
-    type:{
-      type:DataTypes.STRING,
-      defaultValue:"Online"
-    } ,
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.STRING,
+      defaultValue: "Online"
+    },
 
   }, {
+    defaultScope: {
+      exclude: ['createdAt', 'updatedAt']
+    },
     sequelize,
     modelName: 'Event',
   });
